@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="libraryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="libraryModelStoreContainer">
+    <EntitySet Name="avtor" EntityType="libraryModel.Store.avtor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="books" EntityType="libraryModel.Store.books" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_books_avtor" Association="libraryModel.Store.FK_books_avtor">
+      <End Role="avtor" EntitySet="avtor" />
+      <End Role="books" EntitySet="books" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="avtor">
+    <Key>
+      <PropertyRef Name="id_avtors" />
+    </Key>
+    <Property Name="id_avtors" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="secondName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="patronymic" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="books">
+    <Key>
+      <PropertyRef Name="id_books" />
+    </Key>
+    <Property Name="id_books" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nchar" Nullable="false" MaxLength="100" />
+    <Property Name="year" Type="int" />
+    <Property Name="id_avtor" Type="int" />
+  </EntityType>
+  <Association Name="FK_books_avtor">
+    <End Role="avtor" Type="libraryModel.Store.avtor" Multiplicity="0..1" />
+    <End Role="books" Type="libraryModel.Store.books" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="avtor">
+        <PropertyRef Name="id_avtors" />
+      </Principal>
+      <Dependent Role="books">
+        <PropertyRef Name="id_avtor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
